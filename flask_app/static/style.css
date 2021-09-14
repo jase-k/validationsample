@@ -1,0 +1,32 @@
+.container {
+    width: 40%;
+    border:3px solid black;
+    margin: 20px;
+    padding: 10px;
+}
+
+.container.register {
+    background-color: rgb(241, 232, 176);
+}
+
+.container.login {
+    background-color: burlywood;
+}
+
+body {
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+}
+
+.error {
+    color: red;
+    font-size: small;
+}
+
+#feedbackMessage{
+    background-color: chocolate;
+    position: absolute;
+    color: red;
+    top: 300px;
+}

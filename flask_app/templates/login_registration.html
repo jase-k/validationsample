@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    
+{% with messages = get_flashed_messages(True) %}
+{% if feedback in session %}
+<h5 id='feedbackMessage' onclick='hide(this)'>{{session.feedback}} <br> click to remove </h5>
+{% endif %}
+<div class="container register">
+    <form action="/new_user" method="POST" >
+        <div class="mb-3">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" name="first_name" id="first_name" class="form-control" value="{{session['first_name']}}">
+            <!-- Flash Validation Message for First Name -->
+            {% for category, message in messages %}
+                {% if category == 'first_name' %}
+            <p class='error {{message.category}}'>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" name="last_name" id="last_name" class="form-control" value="{{session['last_name']}}">
+            <!-- Flash Validation Message for Last Name -->
+            {% for category, message in messages %}
+                {% if category == 'last_name' %}
+            <p class='error {{message.category}}'>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="{{session['email']}}">
+            <!-- Flash Validation Message for email -->
+            {% for category, message in messages %}
+                {% if category == 'email' %}
+            <p class='error {{message.category}}'>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" onkeyup='pwvalidator()'>
+            <!-- Flash Validation Message for Password -->
+            {% for category, message in messages %}
+                {% if category == 'password' %}
+            <p class='error {{message.category}}'>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="confirm_password" class="form-control" id="confirm_password" name="confirm_password" onkeyup='pwvalidator()'>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="checkbox" value="true" checked>
+            <label class="form-check-label" for="exampleCheck1" >Agree to Terms</label>
+            <!-- Flash Validation Message for checkbox -->
+            {% for category, message in messages %}
+                {% if category == 'checkbox' %}
+            <p class='error {{message.category}}'>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary" id ="register">Register!</button>
+    </form>
+</div>
+<div class="container login">
+    <form action="/users" method="POST">
+        <div class="mb-3">
+            <label for="userEmail" class="form-label">Email address:</label>
+            <input type="email" class="form-control" id="userEmail" name="email" value="{{session['email']}}" >
+        </div>
+        <div class="mb-3">
+            <label for="loginpw" class="form-label">Password</label>
+            <input type="password" class="form-control" id="loginpw" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Login!</button>
+    </form>
+</div>
+{% endwith %}
+<script src="{{url_for('static', filename='password.js')}}"></script>
+</body>
+</html>
