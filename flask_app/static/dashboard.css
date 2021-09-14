@@ -25,6 +25,17 @@
     border: 1px solid lightblue
 }
 
+.time_ago{
+    
+    color: lightblue;
+    font-weight: light;
+}
+
+.name {
+    color: blue;
+    font-weight: bold;
+}
+
 
 .lowermessage, .container {
     display: flex;

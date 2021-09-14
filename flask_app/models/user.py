@@ -1,6 +1,7 @@
 from flask import flash
 from flask_app.config.mysqlconnection import MySQLConnection
 import re
+from datetime import datetime, date, time, timezone
 
 db = 'users_schema'
 
@@ -14,9 +15,18 @@ class User:
         self.updated_at = data['updated_at']
     
     def getMessages(self):
-        query = f"SELECT * from messages WHERE reciever_id = {self.id}"
+        query = f"SELECT * from messages LEFT JOIN users ON messages.sender_id = users.id WHERE reciever_id = {self.id}"
 
         messages = MySQLConnection(db).query_db(query)
+        for message in messages: 
+            difference = datetime.now() - message['created_at']
+            #Calculates difference in time in hours
+            time = round(difference.seconds/3600) 
+            if time > 24: 
+                time = time / 24
+                message['time_ago'] = str(time) + ' days ago'
+            else:
+                message['time_ago'] = str(time) + ' hours ago'
 
         return messages
 

@@ -15,16 +15,16 @@
     <div class="container">
         <div class="messages box">
             <h2># of Messages for {{user['first_name']}}</h2>
+            {% for message in messages %}
             <div id='private_messages'>
                 <!-- Sample Message -->
-                {% for message in messages %}
-                <p class="pm_user">Message from {{message.sender_id}} {{message.created_at}}</p>
+                <p class="pm_user">Message from <span class='name'>{{message.first_name}}</span> <span class ='time_ago'>{{message.time_ago}}</span></p>
                 <div class="lowermessage">
                     <p class="pm">{{message.message}}</p>
                     <img src="{{url_for('static', filename='assets/trash_icon.png')}}" alt="delete" class="trash" onclick="hideGrandParent(this)">
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
         <div class="box">
             <!-- Start Loop -->
