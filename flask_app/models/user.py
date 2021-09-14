@@ -13,6 +13,20 @@ class User:
         self.created_at = data["created_at"]
         self.updated_at = data['updated_at']
     
+    def getMessages(self):
+        query = f"SELECT * from messages WHERE reciever_id = {self.id}"
+
+        messages = MySQLConnection(db).query_db(query)
+
+        return messages
+
+    def sendMessages(self, data):
+        query = "INSERT INTO messages (message, reciever_id, sender_id, created_at, updated_at) Values(%(message)s, %(reciever)s, %(sender)s, NOW(), NOW())"
+
+        id = MySQLConnection(db).query_db(query, data)
+
+        return id
+
     @classmethod
     def getAllUsers(cls):
         query = "Select * from users"
@@ -66,6 +80,7 @@ class User:
             is_valid = False
 
         return is_valid
+
     
     @classmethod
     def getUserByEmail(cls, email):
@@ -92,6 +107,7 @@ class User:
         }
 
         results = MySQLConnection(db).query_db(query, data)
+        user = User(results[0])
 
         #since SELECT query always returns an array, we only return the first result 
-        return results[0]
+        return user

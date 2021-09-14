@@ -4,13 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='dashboard.css')}}">
     <title>Document</title>
 </head>
 <body>
-    <h1>User Profile</h1>
-    <a href="/logout">Logout</a>
-    <h3>
-        Hello {{user['first_name']}}!
-    </h3>
+    <div id="navbar">
+        <h1>{{user['first_name']}}'s Profile</h1>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="container">
+        <div class="messages box">
+            <h2># of Messages for {{user['first_name']}}</h2>
+            <div id='private_messages'>
+                <!-- Sample Message -->
+                {% for message in messages %}
+                <p class="pm_user">Message from {{message.sender_id}} {{message.created_at}}</p>
+                <div class="lowermessage">
+                    <p class="pm">{{message.message}}</p>
+                    <img src="{{url_for('static', filename='assets/trash_icon.png')}}" alt="delete" class="trash" onclick="hideGrandParent(this)">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="box">
+            <!-- Start Loop -->
+            {% for friend in friends %}
+                {% if not friend.id==user.id %}
+                <div class="send_message">
+                    <h4>{{friend.first_name}}</h4>
+                    <form class="pm_message_area" action="/users/{{user.id}}/sendmessage" method="POST">
+                        <p>Message Content: </p>
+                        <textarea name="pm" class="pm_message_area" cols="30" rows="5"></textarea><br>
+                        <input type="text" name="reciever" value="{{friend.id}}" hidden>
+                        <button type="submit">Send!</button>
+                    </form>
+                </div>
+                {% endif %}
+            {% endfor %}
+            <!-- End Loop -->
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='password.js')}}"></script>
 </body>
 </html>

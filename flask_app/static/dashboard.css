@@ -1,0 +1,51 @@
+
+#navbar {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    color: whitesmoke;
+    align-content: center;
+    padding : 10px;
+}
+
+#navbar * {
+    margin: auto
+}
+
+.box {
+    border: 5px solid blue;
+    width: 45%;
+}
+
+.trash {
+    height: 20px;
+}
+
+#private_messages{
+    border: 1px solid lightblue
+}
+
+
+.lowermessage, .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.send_message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid lightblue;
+}
+
+h4{
+    margin: auto;
+}
+
+.pm_message_area {
+    width: 75%;
+}
+
+a{
+    color: lightblue;
+}

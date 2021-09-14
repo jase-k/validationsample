@@ -80,8 +80,26 @@ def loginAttempt():
 def displayUserPage(id):
     user = User.getUserById(id)
     print("USER DATA: ", user)
-    print('session data:', session)
+
+    allusers = User.getAllUsers()
+    messages = user.getMessages()
+
+    print('messages: :', messages)
+
     if 'id' in session:
-        if session['id'] == user['id']:
-            return render_template("user_dashboard.html", user=user)
+        if session['id'] == user.id:
+            return render_template("user_dashboard.html", user=user, friends = allusers, messages = messages)
     return redirect('/')
+
+@app.route('/users/<int:id>/sendmessage', methods=["POST"])
+def sendMessage(id):
+    data = {
+        "message": request.form['pm'],
+        "sender": id,
+        "reciever": request.form['reciever']
+    }
+    print("Sending Data to Messages Table: ", data)
+
+    User.getUserById(id).sendMessages(data)
+    
+    return redirect(f'/users/{id}')

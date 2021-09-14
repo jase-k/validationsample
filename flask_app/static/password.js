@@ -24,3 +24,19 @@ function hide(e){
     console.log(e)
     e.remove()
 }
+
+// var trash_icons = document.getElementsByClassName('trash')
+// console.log(trash_icons)
+
+// for(var i = 0; i< trash_icons.length; i++){
+//     console.log("i'm in the for loop")
+//     trash_icons[i].addEventListener('click',  (this)=>{
+//         console.log(this)
+//         hideGrandParent(this)
+//     })
+//     //  hideGrandParent(trash_icons[i])
+// }
+
+function hideGrandParent(node){
+    node.parentElement.parentElement.remove()
+}
